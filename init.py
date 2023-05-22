@@ -1,6 +1,5 @@
 from MainUi import MainUi
-from ports import ports
-from qtpy.QtWidgets import QMainWindow, QApplication
+from PyQt6.QtWidgets import QMainWindow, QApplication
 import sys
 
 app = QApplication(sys.argv)
