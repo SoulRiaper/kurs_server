@@ -3,8 +3,13 @@ from serial.tools.list_ports import comports
 from DialogUi import DialogUi
 from PyQt6.QtWidgets import QDialog
 import random
+from DataRepository import DataRepository
 
 class MainUi(Ui_MainWindow):
+
+      def __init__(self, db: DataRepository) -> None:
+            super().__init__()
+            self.db = db
 
       def setupUi(self, MainWindow):
             super().setupUi(MainWindow)
@@ -19,6 +24,7 @@ class MainUi(Ui_MainWindow):
       def updateValue(self, value: int):
             value = random.randint(0, 10)
             self.LastValue.setText(str(value))
+            self.db.insertVoltageValue(value)
 
       def show_comPort_window(self):
             self.dialog.show()
