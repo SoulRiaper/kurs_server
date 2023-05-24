@@ -54,7 +54,7 @@ class MainUi(QMainWindow):
                         bytesize = int(self.ui.LengthValue.currentText()),
                         
                         )
-                  self.showMessageBox("OK", "")
+                  self.showMessageBox("OK", "Соединение установлено")
 
             except serial.SerialException as e:
                   self.showMessageBox(e.__class__.__name__, str(e))
