@@ -37,7 +37,7 @@ class MainUi(QMainWindow):
       def listenPort(self):
             self.ui.LastValue.setText(f"{random.randint(0,10)}")
             # if self.s.in_waiting > 0:
-            #       string = self.s.read(16).decode('utf-8', 'ignore')
+            string = self.s.read(16).decode('utf-8', 'ignore')
                   
             #       try:
             #             self.LastValue.setText(repr(string))
@@ -57,7 +57,7 @@ class MainUi(QMainWindow):
                   self.showMessageBox("OK", "Соединение установлено")
 
             except serial.SerialException as e:
-                  self.showMessageBox(e.__class__.__name__, str(e))
+                  self.showMessageBox(f"ERROR: {e.__class__.__name__}", str(e))
             
       def showMessageBox(self, title: str, text: str):
             self.msg.setWindowTitle(title)
