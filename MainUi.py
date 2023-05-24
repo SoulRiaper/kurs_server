@@ -1,41 +1,50 @@
 from UI_MainWindow import Ui_MainWindow
 import serial
 from serial.tools.list_ports import comports
-from DialogUi import DialogUi
-from PyQt5.QtWidgets import QDialog
-import serial.tools.list_ports as list_ports
+from PyQt5.QtCore import QTimer
 from DataRepository import DataRepository
+from PyQt5.QtWidgets import QMainWindow
+import random
 
-class MainUi(Ui_MainWindow):
+class MainUi(QMainWindow):
 
       def __init__(self, db: DataRepository) -> None:
             super().__init__()
+
+            self.ui = Ui_MainWindow()
+            
+            self.ui.setupUi(self)
+            self.ui.startStopButton.clicked.connect(self.startListen)
+
             self.db = db
 
-      def setupUi(self, MainWindow):
-            super().setupUi(MainWindow)
-            self.portListenButton.clicked.connect(self.setupPort)
-            self.ListenPortButton.clicked.connect(self.listenPort)
-
-            dialog = DialogUi()
-            dialog_ui = QDialog()
-            dialog.setupUi(dialog_ui)
-            self.dialog = dialog_ui
-
+            ports = comports()
+            if len(ports) == 0:
+                  return
+            for port in ports:
+                  self.ui.comPorts.addItem(port.device)
 
       def listenPort(self):
-            
-            while 1:
+            self.ui.LastValue.setText(f"{random.randint(0,10)}")
+            # if self.s.in_waiting > 0:
+            #       string = self.s.read(16).decode('utf-8', 'ignore')
                   
-                  if self.s.in_waiting > 0:
-                        string = self.s.read(16).decode('utf-8', 'ignore')
-                        
-                        try:
-                              self.LastValue.setText(repr(string))
-                        except Exception as ex:
-                              print(ex)
-                              pass
+            #       try:
+            #             self.LastValue.setText(repr(string))
+            #       except Exception as ex:
+            #             print(ex)
+            #             pass
 
+
+      def startListen(self):
+            self.timer.start(1000)
+            self.ui.startStopButton.setText("Остановить мониторинг")
+            self.ui.startStopButton.clicked.connect(self.stopListen)
+
+      def stopListen(self):
+            self.timer.stop()
+            self.ui.startStopButton.setText("Начать мониторинг")
+            self.ui.startStopButton.clicked.connect(self.startListen)
 
       def setupPort(self):
             self.s = serial.Serial(
@@ -45,14 +54,12 @@ class MainUi(Ui_MainWindow):
                   
                   )
             self.LastValue.setText('123123123')
+            
 
-      def show_comPort_window(self):
-            self.dialog.show()
-
-      def retranslateUi(self, MainWindow):
-            super().retranslateUi(MainWindow)
-            ports = comports()
-            if len(ports) == 0:
-                  return
-            for port in ports:
-                  self.comPorts.addItem(port.device)
+      def show(self) -> None:
+            super().show()
+            # self.startStopButton.clicked.connect(self.startListen)
+            
+            self.timer = QTimer(self)
+            self.timer.timeout.connect(self.listenPort)
+            
