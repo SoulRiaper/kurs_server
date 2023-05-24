@@ -1,6 +1,5 @@
 from MainUi import MainUi
-from PyQt5.QtWidgets import QMainWindow, QApplication
-from PyQt5.QtCore import QTimer
+from PyQt5.QtWidgets import QApplication
 import sys
 from DataRepository import DataRepository
 
