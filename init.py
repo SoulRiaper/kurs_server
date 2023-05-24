@@ -1,5 +1,5 @@
 from MainUi import MainUi
-from PyQt6.QtWidgets import QMainWindow, QApplication
+from PyQt5.QtWidgets import QMainWindow, QApplication
 import sys
 from DataRepository import DataRepository
 
