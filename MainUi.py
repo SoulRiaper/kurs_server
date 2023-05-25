@@ -16,8 +16,6 @@ class MainUi(QMainWindow):
             self.ui = Ui_MainWindow()
             self.ui.setupUi(self)
             self.ui.startStopButton.clicked.connect(self.listenPort)
-            self.ui.ListenPortButton.clicked.connect(self.setupPort)
-
             # Define database module
             self.db = db
 
@@ -54,12 +52,8 @@ class MainUi(QMainWindow):
             ]
             self.ui.LastValue.setText(str(data[0]))
             self.db.insertVoltageValue(data[0])
-      
-      def setupPort(self):
-            self.serial_reader.stop()
-
             
-            
+                   
       def showMessageBox(self, title: str, text: str):
             self.msg.setWindowTitle(title)
             self.msg.setText(text)
