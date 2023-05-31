@@ -46,10 +46,8 @@ class MainUi(QMainWindow):
             self.serial_reader.start()
 
       def handle_data(self, data):
-            data = [
-                  round(float(data[5:9]) * 3.3 / 4095, 2),
-                  round(float(data[15:19]) * 3.3 / 4095, 2)
-            ]
+            data = data.split()
+            data[:] = [round((float(val) * 3.3 / 4095), 2) for val in data]
             self.ui.LastValue.setText(str(data[0]))
             self.db.insertVoltageValue(data[0])
             
