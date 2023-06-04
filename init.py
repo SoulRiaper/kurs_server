@@ -7,9 +7,5 @@ app = QApplication(sys.argv)
 
 window = MainUi(DataRepository())
 
-# timer = QTimer(window)
-# timer.timeout.connect(window.listenPort)
-# timer.start(1000)
-
 window.show()
 app.exec()
